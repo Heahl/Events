@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Fehler</title>
+</head>
+<body>
+<h1><%= message || 'Ein Fehler ist aufgetreten' %></h1>
+<% if (error && error.status) { %>
+    <h2>Status: <%= error.status %></h2>
+<% } %>
+<% if (error && error.stack) { %>
+    <pre><%= error.stack %></pre>
+<% } %>
+</body>
+</html>

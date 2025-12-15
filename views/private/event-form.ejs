@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title><%= isEditing ? 'Event bearbeiten - ' + event.title : 'Event erstellen' %></title>
+    <link rel="stylesheet" href="/stylesheets/global.css">
+    <link rel="stylesheet" href="/stylesheets/toast.css">
+    <link rel="stylesheet" href="/stylesheets/eventForm.css">
+    <script src="/javascripts/toast.js" defer></script>
+    <script src="/javascripts/auth/logout.js" defer></script>
+    <script src="/javascripts/eventForm.js" defer></script>
+</head>
+<body>
+<div class="admin-dashboard-container">
+    <div class="dashboard-header" style="display: flex; align-items: center; margin-top: 0; margin-bottom: 20px">
+        <div class="dashboard-title-area">
+            <h1 class="admin-dashboard-title"><%= isEditing ? 'Event bearbeiten' : 'Neues Event erstellen' %></h1>
+            <% if (isEditing) { %>
+                <p class="admin-dashboard-subtitle"><%= event.title %></p>
+            <% } %>
+        </div>
+        <button type="button" class="logout-button" id="logoutButton">Logout</button>
+    </div>
+
+    <div class="admin-section">
+        <h2 class="admin-section-title"><%= isEditing ? 'Event-Daten aktualisieren' : 'Neues Event anlegen' %></h2>
+
+        <form id="eventForm" data-event-id="<%= isEditing ? event.id : null %>"
+              data-is-editing="<%= isEditing ? 'true' : 'false' %>">
+            <div class="form-group">
+                <label for="title" class="form-label">Titel *</label>
+                <input type="text" id="title" name="title" class="form-input"
+                       value="<%= isEditing ? event.title : '' %>" required>
+                <div id="titleError" class="error-message"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="description" class="form-label">Beschreibung</label>
+                <textarea id="description" name="description" class="form-input"
+                          rows="4"><%= isEditing ? (event.description || '') : '' %></textarea>
+                <div id="descriptionError" class="error-message"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="location" class="form-label">Ort</label>
+                <input type="text" id="location" name="location" class="form-input"
+                       value="<%= isEditing ? (event.location || '') : '' %>">
+                <div id="locationError" class="error-message"></div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="startDate" class="form-label">Startdatum *</label>
+                    <input type="datetime-local" id="startDate" name="startDate" class="form-input"
+                           value="<%= isEditing ? new Date(event.startDate).toISOString().slice(0, 16) : '' %>"
+                           required>
+                    <div id="startDateError" class="error-message"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="endDate" class="form-label">Enddatum *</label>
+                    <input type="datetime-local" id="endDate" name="endDate" class="form-input"
+                           value="<%= isEditing ? new Date(event.endDate).toISOString().slice(0, 16) : '' %>" required>
+                    <div id="endDateError" class="error-message"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="registrationDeadline" class="form-label">Anmeldefrist *</label>
+                <input type="datetime-local" id="registrationDeadline" name="registrationDeadline" class="form-input"
+                       value="<%= isEditing ? new Date(event.registrationDeadline).toISOString().slice(0, 16) : '' %>"
+                       required>
+                <div id="registrationDeadlineError" class="error-message"></div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn-primary">
+                    <%= isEditing ? 'Event aktualisieren' : 'Event erstellen' %>
+                </button>
+                <a href="/admin/dashboard" class="btn-secondary">Abbrechen</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="toastContainer"></div>
+</body>
+</html>

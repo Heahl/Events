@@ -1,0 +1,39 @@
+{
+  "name": "events",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node bin/www.js",
+    "dev": "bun run --watch bin/www.js",
+    "test": "bun test",
+    "jest": "NODE_OPTIONS='--experimental-vm-modules' bun run jest --no-cache",
+    "test:watch": "bun test:watch"
+  },
+  "dependencies": {
+    "@jest/globals": "^30.2.0",
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "~1.4.7",
+    "debug": "~2.6.9",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-rate-limit": "^8.2.1",
+    "express-session": "^1.18.2",
+    "http-errors": "~1.6.3",
+    "mongodb": "^7.0.0",
+    "mongoose": "^9.1.2",
+    "morgan": "^1.10.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "mongodb-memory-server": "^10.4.3",
+    "supertest": "^7.2.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

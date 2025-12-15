@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/stylesheets/global.css">
+    <link rel="stylesheet" href="/stylesheets/toast.css">
+    <link rel="stylesheet" href="/stylesheets/adminDashboard.css">
+    <script src="/javascripts/toast.js" defer></script>
+    <script src="/javascripts/auth/logout.js" defer></script>
+</head>
+<body>
+<div class="admin-dashboard-container">
+    <div class="dashboard-header" style="display: flex; align-items: center; margin-bottom: 20px">
+        <div class="dashboard-title-area">
+            <h1 class="admin-dashboard-title">Dashboard</h1>
+            <p class="admin-dashboard-subtitle">Verwalte deine Veranstaltungen und Teilnehmer</p>
+        </div>
+        <button type="button" class="logout-button" id="logoutButton">Logout</button>
+    </div>
+
+    <div class="admin-section">
+        <h2 class="admin-section-title">Deine Veranstaltungen</h2>
+
+        <% if(events && events.length > 0){ %>
+            <ul class="admin-events-list">
+                <% events.forEach(event=>{ %>
+                    <li class="admin-event-item" data-event-id="<%= event.id %>" data-event-title="<%= event.title %>">
+                        <div class="admin-event-info">
+                            <div class="admin-event-title">
+                                <a href="/admin/event/<%= event.id %>/participants" class="back-link">
+                                    <%= event.title %>
+                                </a>
+                            </div>
+                            <div class="admin-event-date">
+                                <%= event.startDate ? new Date(event.startDate).toLocaleDateString('de-DE', {
+                                    weekday: "long",
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric"
+                                }) : '' %>
+                            </div>
+                            <div class="admin-event-stats">
+                        <span class="admin-event-participants">
+                            <%= event.participants ? event.participants.length : 0 %> Angemeldete Teilnehmer
+                        </span>
+                                <span><%= event.location || 'Online' %></span>
+                            </div>
+                        </div>
+                        <div class="admin-event-actions">
+                            <a href="/admin/event/<%= event.id %>/participants"
+                               class="admin-action-btn admin-action-btn-participants">
+                                Anmeldeliste
+                            </a>
+                            <a href="/admin/event/<%= event.id %>/edit" class="admin-action-btn admin-action-btn-view">
+                                Bearbeiten
+                            </a>
+                            <!--
+                            <button type="button" class="admin-action-btn admin-action-btn-share"
+                                    data-event-id="<%= event.id %>" data-event-title="<%= event.title %>">
+                                <img src="/icons/link.svg" alt="Link teilen" class="action-icon">
+                                Teilen
+                            </button>
+                            -->
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>Erstelle dein erstes Event!</p>
+        <% } %>
+        <div class="admin-create-event">
+            <a href="/admin/event/create" class="btn-primary admin-create-event-link">Neues Event erstellen</a>
+        </div>
+    </div>
+</div>
+<div id="toastContainer"></div>
+</body>
+</html>

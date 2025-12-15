@@ -1,0 +1,103 @@
+.error-message {
+    color: red;
+    font-size: 0.9em;
+}
+
+.form-container {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+form {
+    max-width: 95vw;
+    width: 600px;
+    height: auto;
+    background-color: white;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 4rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+label {
+    width: 100%;
+    text-align: left;
+    margin-bottom: .2rem;
+    font-size: 16px;
+}
+
+/* extends global.form-input */
+input {
+    min-width: 100%;
+    text-decoration: none;
+    margin-bottom: 2rem;
+    font-size: 16px;
+    padding: 0 .5rem;
+}
+
+.password-container {
+    width: 100%;
+    margin-bottom: 3rem;
+}
+
+.password-input-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.password-input-wrapper .form-input {
+    margin-bottom: 0;
+    padding-right: 40px;
+    width: 100%;
+}
+
+.toggle-btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #ddd;
+    border: none;
+    cursor: pointer;
+    min-width: 40px;
+    height: 100%;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.toggle-btn:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+.toggle-btn img {
+    width: auto;
+    height: 80%;
+    object-fit: contain;
+}

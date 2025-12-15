@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Teilnehmerliste - <%= event.title %></title>
+    <link rel="stylesheet" href="/stylesheets/global.css">
+    <link rel="stylesheet" href="/stylesheets/toast.css">
+    <link rel="stylesheet" href="/stylesheets/eventParticipants.css">
+    <script src="/javascripts/toast.js" defer></script>
+    <script src="/javascripts/auth/logout.js" defer></script>
+    <script src="/javascripts/eventParticipants.js" defer></script>
+</head>
+<body>
+<div class="admin-dashboard-container">
+    <div class="dashboard-header" style="display: flex; align-items: center; margin-bottom: 20px">
+        <div class="dashboard-title-area">
+            <h1 class="admin-dashboard-title">Teilnehmerliste</h1>
+            <p class="admin-dashboard-subtitle"><%= event.title %></p>
+        </div>
+        <button type="button" class="logout-button" id="logoutButton">Logout</button>
+    </div>
+
+    <div class="admin-section">
+        <div class="participants-header">
+            <h2 class="admin-section-title">Event-Daten</h2>
+            <button id="downloadCsvBtn" class="btn-primary" data-event-id="<%= event.id %>">
+                Als CSV herunterladen
+            </button>
+        </div>
+
+        <div class="event-details-grid">
+            <div class="event-detail-item">
+                <span class="event-detail-label">Titel</span>
+                <span class="event-detail-value"><%= event.title %></span>
+            </div>
+            <div class="event-detail-item">
+                <span class="event-detail-label">Datum</span>
+                <span class="event-detail-value">
+                    <%= new Date(event.startDate).toLocaleDateString('de-DE', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    }) %>
+                </span>
+            </div>
+            <div class="event-detail-item">
+                <span class="event-detail-label">Startzeit</span>
+                <span class="event-detail-value">
+                    <%= new Date(event.startDate).toLocaleTimeString('de-DE', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) %> Uhr
+                </span>
+            </div>
+            <div class="event-detail-item">
+                <span class="event-detail-label">Endzeit</span>
+                <span class="event-detail-value">
+                    <%= new Date(event.endDate).toLocaleTimeString('de-DE', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) %> Uhr
+                </span>
+            </div>
+            <div class="event-detail-item">
+                <span class="event-detail-label">Ort</span>
+                <span class="event-detail-value"><%= event.location || 'Online' %></span>
+            </div>
+            <div class="event-detail-item">
+                <span class="event-detail-label">Angemeldet</span>
+                <span class="event-detail-value"><%= event.participants ? event.participants.length : 0 %> Personen</span>
+            </div>
+        </div>
+
+        <h3 class="admin-section-title">Teilnehmer</h3>
+
+        <% if (event.participants && event.participants.length > 0) { %>
+            <div class="participants-table-container">
+                <table class="participants-table">
+                    <thead>
+                    <tr>
+                        <th>Vorname</th>
+                        <th>Nachname</th>
+                        <th>E-Mail</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% event.participants.forEach(participant => { %>
+                        <tr>
+                            <td><%= participant.firstName || '' %></td>
+                            <td><%= participant.lastName || '' %></td>
+                            <td><%= participant.email || '' %></td>
+                        </tr>
+                    <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        <% } else { %>
+            <div class="no-participants">
+                <p>Es sind noch keine Teilnehmer angemeldet.</p>
+            </div>
+        <% } %>
+
+        <div style="margin-top: 30px;">
+            <a href="/admin/dashboard" class="btn-secondary">Zurück zum Dashboard</a>
+        </div>
+    </div>
+</div>
+
+<div id="toastContainer"></div>
+</body>
+</html>

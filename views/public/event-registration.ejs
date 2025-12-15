@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Anmeldung für <%= event.title %></title>
+    <style>
+    </style>
+    <script src="javascripts/registerForEvent.js" defer></script>
+</head>
+<body>
+<div class="container">
+    <h1>Anmeldung für <%= event.title %></h1>
+
+    <div class="event-info">
+        <h3>Event-Details:</h3>
+        <p><strong>Datum:</strong> <%= new Date(event.startDate).toLocaleDateString('de-DE', {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            }) %></p>
+        <% if (event.location) { %>
+            <p><strong>Ort:</strong> <%= event.location %></p>
+        <% } %>
+        <% if(event.description){ %>
+            <p><strong>Beschreibung:</strong> <%= event.description %></p>
+        <% } %>
+    </div>
+
+    <form id="registrationForm" data-event-id="<%= event._id %>">
+        <div class="form-group">
+            <label for="firstName">Vorname</label>
+            <input type="text" id="firstName" name="firstName" required>
+            <div id="firstNameError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Nachname</label>
+            <input type="text" id="lastName" name="lastName" required>
+            <div id="lastNameError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required>
+            <div id="emailError" class="error-message"></div>
+        </div>
+        <button type="submit" class="submit-button">Anmelden</button>
+    </form>
+
+    <a href="/event" class="back-link">Zurück zur Übersicht</a>
+</div>
+<div id="toastContainer"></div>
+</body>
+</html>
