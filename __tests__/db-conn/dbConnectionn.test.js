@@ -1,20 +1,23 @@
-import {jest} from '@jest/globals';
+import {describe, test, expect, beforeAll, afterAll} from 'bun:test';
 import connectDB from '../../config/database.js';
 import mongoose from 'mongoose';
 
-jest.setTimeout(10000);
+// Testmodell definieren
+const TestModel = mongoose.model('TestConnection', new mongoose.Schema({
+    testId: String,
+    timestamp: {type: Date, default: Date.now}
+}));
 
 describe('MongoDB Verbindung (Integrationstest gegen Atlas)', () => {
-    const TestModel = mongoose.model('TestConnection', new mongoose.Schema({
-        testId: String,
-        timestamp: {type: Date, default: Date.now}
-    }));
-
     beforeAll(async () => {
+        // bestehende Verbindung trennen
+        if (mongoose.connection.readyState !== 0) await mongoose.disconnect();
+        // DB verbinden
         await connectDB();
     });
 
     afterAll(async () => {
+        // aufräumen
         await TestModel.deleteMany({testId: 'db-connection-test'});
         await mongoose.disconnect();
     });
@@ -29,5 +32,7 @@ describe('MongoDB Verbindung (Integrationstest gegen Atlas)', () => {
 
         const found = await TestModel.findOne({testId: 'db-connection-test'});
         expect(found).not.toBeNull();
+        // Daten auch korrekt?
+        expect(found._id.toString()).toBe(doc._id.toString());
     });
 });

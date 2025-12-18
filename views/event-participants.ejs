@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <!DOCTYPE html>
+    <html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <title>Teilnehmerliste - <%= event.title %></title>
+    </head>
+    <body>
+    <h1>Teilnehmerliste: <%= event.title %></h1>
+    <h2>Event-Daten:</h2>
+    <p>Titel: <%= event.title %></p>
+    <p>Datum: <%= (event.date && new Date(event.date)) ? new Date(event.date).toISOString().split('T')[0] : '' %></p>
+    <p>
+        Start: <%= (event.startDate && new Date(event.startDate)) ? new Date(event.startDate).toLocaleString() : '' %></p>
+    <p>Ende: <%= (event.endDate && new Date(event.endDate)) ? new Date(event.endDate).toLocaleString() : '' %></p>
+
+    <h2>Teilnehmer:</h2>
+    <% if (Array.isArray(event.participants) && event.participants.length > 0) { %>
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Vorname</th>
+                <th>Nachname</th>
+                <th>E-Mail</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% event.participants.forEach(participant => { %>
+                <tr>
+                    <td><%= participant.firstName || '' %></td>
+                    <td><%= participant.lastName || '' %></td>
+                    <td><%= participant.email || '' %></td>
+                </tr>
+            <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>Es sind noch keine Teilnehmer angemeldet.</p>
+    <% } %>
+    </body>
+    </html>

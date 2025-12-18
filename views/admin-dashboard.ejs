@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+<h1>Admin Dashboard</h1>
+<h2>Deine Events:</h2>
+<% if (events && events.length > 0) { %>
+    <ul>
+        <% events.forEach(event => { %>
+            <li>
+                <a href="/admin/event/<%= event._id %>/participants"><%= event.title %></a> -
+                <%= event.startDate ? new Date(event.startDate).toISOString().split('T')[0] : '' %> -
+                (<%= event.participants ? event.participants.length : 0 %> Anmeldungen)
+            </li>
+        <% }); %>
+    </ul>
+<% } else { %>
+    <p>Du hast noch keine Events erstellt.</p>
+<% } %>
+<a href="/admin/event/create">Neues Event erstellen</a>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Event erstellen</title>
+</head>
+<body>
+<h1>Neues Event erstellen</h1>
+<form method="POST" action="/admin/event">
+    <label for="title">Titel:</label>
+    <input type="text" id="title" name="title" required><br><br>
+
+    <label for="description">Beschreibung:</label>
+    <textarea id="description" name="description"></textarea><br><br>
+
+    <label for="location">Ort:</label>
+    <input type="text" id="location" name="location"><br><br>
+
+    <label for="date">Datum:</label>
+    <input type="date" id="date" name="date"><br><br>
+
+    <label for="startDate">Startzeit:</label>
+    <input type="datetime-local" id="startDate" name="startDate"><br><br>
+
+    <label for="endDate">Endzeit:</label>
+    <input type="datetime-local" id="endDate" name="endDate"><br><br>
+
+    <label for="registrationDeadline">Anmeldefrist:</label>
+    <input type="datetime-local" id="registrationDeadline" name="registrationDeadline"><br><br>
+
+    <button type="submit">Event speichern</button>
+</form>
+</body>
+</html>

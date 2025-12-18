@@ -4,15 +4,16 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www.mjs",
-    "dev": "bun run --watch ./bin/www.mjs",
-    "test": "NODE_OPTIONS='--experimental-vm-modules' bun run jest",
-    "test:watch": "bun run jest --watch"
+    "start": "node bin/www.js",
+    "dev": "bun run --watch bin/www.js",
+    "test": "bun test",
+    "jest": "NODE_OPTIONS='--experimental-vm-modules' bun run jest --no-cache",
+    "test:watch": "bun test:watch"
   },
   "dependencies": {
     "@jest/globals": "^30.2.0",
     "bcrypt": "^6.0.0",
-    "cookie-parser": "~1.4.4",
+    "cookie-parser": "~1.4.7",
     "debug": "~2.6.9",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
@@ -27,11 +28,12 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "inquirer": "^13.1.0",
     "jest": "^30.2.0",
-    "mongodb-memory-server": "^10.4.1",
+    "mongodb-memory-server": "^10.4.2",
     "supertest": "^7.1.4"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5.9.3"
   }
 }

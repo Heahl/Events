@@ -7,7 +7,7 @@
 import app from '../app.mjs';
 import connectDB from '../config/database.js';
 
-const debug = require('debug')('events:server');
+import debug from 'node:events';
 import {createServer} from 'http';
 
 /**
