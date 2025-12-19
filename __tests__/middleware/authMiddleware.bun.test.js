@@ -2,7 +2,7 @@ import {describe, test, expect, beforeAll, afterEach} from "bun:test";
 import request from "supertest";
 import mongoose from "mongoose";
 import User from '../../models/User.js';
-import app from '../../app.mjs';
+import app from '../../app.js';
 
 // Hilfsfunktion, um sicherzustellen, dass die Verbindung aktiv ist
 const ensureConnection = async () => {

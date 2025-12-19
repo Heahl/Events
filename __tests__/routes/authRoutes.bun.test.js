@@ -2,7 +2,7 @@
 import {describe, test, expect, afterEach, afterAll, beforeAll} from "bun:test"; // <--- beforeAll hinzugefügt
 import request from "supertest";
 import mongoose from "mongoose";
-import app from '../../app.mjs';
+import app from '../../app.js';
 import User from '../../models/User.js';
 
 let dbConnected = false;

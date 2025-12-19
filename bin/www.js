@@ -4,10 +4,10 @@
  * Module dependencies.
  */
 
-import app from '../app.mjs';
+import app from '../app.js';
 import connectDB from '../config/database.js';
-
-import debug from 'node:events';
+// Importiere das 'debug'-Paket, nicht das node:events-Modul
+import debugPkg from 'debug';
 import {createServer} from 'http';
 
 /**
@@ -91,5 +91,7 @@ function onListening() {
     const bind = typeof addr === 'string'
         ? 'pipe ' + addr
         : 'port ' + addr.port;
+
+    const debug = debugPkg('events:server');
     debug('Listening on ' + bind);
 }

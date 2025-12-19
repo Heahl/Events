@@ -3,13 +3,23 @@ import {register, login} from "../controllers/authController.js";
 
 const router = express.Router();
 
-/* ----------  POST /register  ---------- */
+/* === GET / (weiterleitung zu login) === */
+router.get('/', (req, res) => {
+    res.redirect('/login');
+})
+
+/* ===  POST /register  === */
 router.post('/register', register);
 
-/* ----------  POST /login  ---------- */
+/* === GET /register === */
+router.get('/register', (req, res) => {
+    res.render('register');
+})
+
+/* ===  POST /login  === */
 router.post('/login', login);
 
-/* ----------  GET /login ---------- */
+/* ===  GET /login === */
 router.get('/login', (req, res) => {
     res.render('login');
 });

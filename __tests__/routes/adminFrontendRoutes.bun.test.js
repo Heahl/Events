@@ -2,7 +2,7 @@
 import {describe, test, expect, beforeAll, afterAll, afterEach} from 'bun:test';
 import request from 'supertest';
 import mongoose from 'mongoose';
-import app from '../../app.mjs';
+import app from '../../app.js';
 import User from '../../models/User.js';
 import Event from '../../models/Event.js';
 // bcrypt wird nicht mehr benötigt, da das User-Model das Hashing übernimmt
@@ -58,7 +58,6 @@ describe('Admin Frontend Routes - /admin/*', () => {
         });
         testProviderId = user._id;
     });
-    ;
 
     afterAll(async () => {
         // User aufräumen
