@@ -1,5 +1,3 @@
-"use strict";
-
 function showToast(message) {
     const toast = document.createElement('div');
     toast.className = 'toast';

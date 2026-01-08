@@ -38,4 +38,12 @@ bun run dev
 
 Die Anwendung ist dann unter [localhost:3000](http://localhost:3000) erreichbar
 
-TODO: Deployment beschreiben
+## Deployment
+
+Die Anwendung wurde auf einer AWS EC2 Instanz (Ubuntu) deployed.
+- Die EC2-Instanz stellt die Laufzeitumgebung bereit
+- Abhängigkeiten werden mit Bun installiert
+- Der Server wird mit Node.js gestartet
+- Die Anwendung läuft auf Port 3000 und ist über die öffentliche IP der EC2-Instanz per HTTP erreichbar
+- Sensible Konfigurationswerte (z. B. Datenbank-Zugangsdaten) werden über eine .env-Datei gesetzt und nicht im Repository gespeichert
+- Der Serverprozess wird in einer persistenten Screen-Session ausgeführt, sodass die Anwendung auch nach dem Schließen der SSH-Verbindung weiterläuft.

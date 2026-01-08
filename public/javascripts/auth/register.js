@@ -1,6 +1,4 @@
-"use strict";
 // Behandelt das Registrierungsformular
-
 document.addEventListener('DOMContentLoaded', registerForm);
 
 async function registerForm() {

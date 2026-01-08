@@ -1,5 +1,3 @@
-"use strict";
-
 document.addEventListener('DOMContentLoaded', loginForm);
 
 async function loginForm() {

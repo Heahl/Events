@@ -1,6 +1,3 @@
-"use strict";
-// todo: use strict entfernen
-
 console.log('create-event.js starting to load');
 
 document.addEventListener('DOMContentLoaded', function () {

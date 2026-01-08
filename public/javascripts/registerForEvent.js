@@ -1,6 +1,3 @@
-"use strict";
-// todo: use strict entfernen
-
 document.addEventListener('DOMContentLoaded', registerForEvent);
 
 function registerForEvent() {

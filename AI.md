@@ -212,4 +212,3 @@ Schreibe die zu unserer app.js passende swaggerOptions.js Datei [/app.js]
 ```
 
 Auch dieser Output ist 1:1 übernommen und in der Datei "/swaggerOptions.js" einsehbar
-

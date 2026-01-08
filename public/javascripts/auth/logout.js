@@ -1,5 +1,3 @@
-"use strict";
-
 document.addEventListener('DOMContentLoaded', logout);
 
 function logout() {
