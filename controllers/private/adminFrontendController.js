@@ -36,9 +36,7 @@ export const dashboard = async (req, res) => {
     try {
         const userId = req.session.userId;
 
-        console.log("DEBUG: Dashboard - gesuchte userId:", userId);
         const events = await Event.find({providerId: userId});
-        console.log("DEBUG: Dashboard - gefundene Events:", JSON.stringify(events, null, 2));
 
         res.render('private/admin-dashboard', {events});
 

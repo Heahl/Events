@@ -85,16 +85,12 @@ export const login = async (req, res) => {
         if (!email || !password)
             return res.status(400).json({error: 'E-Mail und Passwort sind Pflicht.'});
 
-        console.log("Login: Eingegebenes Passwort:", password);
         const user = await User.findOne({email});
         if (!user) {
-            console.log("Login: Kein Nutzer mit dieser E-Mail gefunden:", email);
             return res.status(401).json({error: 'Ungültige E-Mail oder Passwort'});
         }
 
-        console.log("Login: Gespeichertes Hash aus DB:", user.password);
         const match = await bcrypt.compare(password, user.password);
-        console.log("Login: Passwort-Vergleich (bcrypt.compare) Ergebnis:", match);
 
         if (!match) return res.status(401).json({error: 'Ungültige E-Mail oder Passwort'});
 

@@ -121,12 +121,6 @@ import Event from '../../models/Event.js';
 /* ---------- POST /admin/events && POST /api/events  ---------- */
 export const createEvent = async (req, res) => {
     try {
-        console.log('createEvent called with headers:', req.headers);
-        console.log('Content-Type:', req.headers['content-type']);
-        console.log('Accept:', req.headers.accept);
-        console.log('isApiCall check - accept includes application/json:', req.headers.accept?.includes('application/json'));
-        console.log('isApiCall check - xhr:', req.xhr);
-        console.log('isApiCall check - content-type includes application/json:', req.headers['content-type']?.includes('application/json'));
 
         const {
             title,
@@ -152,7 +146,6 @@ export const createEvent = async (req, res) => {
         });
 
         const isApiCall = req.headers.accept?.includes('application/json') || req.xhr;
-        console.log('Final isApiCall result:', isApiCall);
 
         if (isApiCall) {
             res.status(201).json({id: event._id, title: event.title});
@@ -161,7 +154,6 @@ export const createEvent = async (req, res) => {
         }
     } catch (err) {
         const isApiCall = req.headers.accept?.includes('application/json') || req.xhr;
-        console.log('Error - Final isApiCall result:', isApiCall);
 
         if (err.name === 'ValidationError') {
             const msg = Object.values(err.errors).map(e => e.message).join(', ');
@@ -186,17 +178,14 @@ export const createEvent = async (req, res) => {
 /* ----------  GET /api/events  ---------- */
 export const getMyEvents = async (req, res) => {
     try {
-        console.log("GET /api/events - Session userId:", req.session.userId);
         const userId = req.session.userId;
 
         if (!userId) {
             return res.status(401).json({error: 'Nicht authentifiziert'});
         }
 
-        console.log("GET /api/events - Suchanfrage für providerId:", userId);
         const events = await Event.find({providerId: userId});
 
-        console.log("GET /api/events - Gefundene Events:", events);
         res.status(200).json(events);
     } catch (err) {
         console.error(err);

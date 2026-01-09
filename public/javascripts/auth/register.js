@@ -2,7 +2,6 @@
 document.addEventListener('DOMContentLoaded', registerForm);
 
 async function registerForm() {
-    console.log("register.js geladen");
 
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
         e.preventDefault();

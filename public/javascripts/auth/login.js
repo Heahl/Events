@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', loginForm);
 
 async function loginForm() {
-    console.log("login.js geladen");
 
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();

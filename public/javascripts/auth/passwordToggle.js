@@ -5,9 +5,6 @@ function setupPasswordToggle() {
     const toggleBtn = document.getElementById('toggle-btn');
     const toggleImg = document.getElementById('toggle-img');
 
-    console.log('Input gefunden:', !!input);
-    console.log('Button gefunden:', !!toggleBtn);
-    console.log('Image gefunden:', !!toggleImg);
 
     if (input && toggleBtn && toggleImg) {
         toggleBtn.addEventListener('click', () => {

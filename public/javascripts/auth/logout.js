@@ -3,12 +3,10 @@ document.addEventListener('DOMContentLoaded', logout);
 function logout() {
     const logoutButton = document.getElementById('logoutButton');
     if (logoutButton) {
-        console.log('Logout Button gefunden');
 
         logoutButton.addEventListener('click', async function (e) {
             e.preventDefault();
 
-            console.log('Logout Button geklickt');
 
             try {
                 const response = await fetch('/logout', {
@@ -18,7 +16,6 @@ function logout() {
                     }
                 });
 
-                console.log('Antwort Status:', response.status);
 
                 if (response.ok) {
                     // Weiterleitung zu den öffentlichen Events

@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', registerForEvent);
 
 function registerForEvent() {
-    console.log("registerForEvent.js geladen");
     const form = document.getElementById('registrationForm');
 
     if (!form) {
@@ -11,11 +10,9 @@ function registerForEvent() {
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        console.log("Form submit prevented");
 
         // Hol die Event-ID aus dem data-Attribut
         const eventId = form.getAttribute('data-event-id');
-        console.log("Event ID:", eventId);
 
         if (!eventId) {
             console.error("Event ID not found in form");
@@ -32,7 +29,6 @@ function registerForEvent() {
 
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
-        console.log("Form data:", data);
 
         try {
             const response = await fetch(`/event/${eventId}/register`, {
@@ -44,8 +40,6 @@ function registerForEvent() {
                 body: JSON.stringify(data)
             });
 
-            console.log('Response status:', response.status);
-            console.log('Response headers:', response.headers.get('content-type'));
 
             // Überprüfe, ob die Antwort JSON ist
             const contentType = response.headers.get('content-type');
@@ -65,7 +59,6 @@ function registerForEvent() {
             } else {
                 // Wenn es kein JSON ist, lies den Text
                 const textResult = await response.text();
-                console.log('Non-JSON response:', textResult);
                 showToast('Serverfehler - Antwort ist kein JSON');
             }
         } catch (error) {
