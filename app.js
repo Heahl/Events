@@ -8,6 +8,7 @@ import session from "express-session";
 import {fileURLToPath} from 'url';
 import {dirname, join} from 'path';
 import specs from './swaggerOptions.js';
+import swaggerUi from 'swagger-ui-express';
 
 import authRouter from './routes/auth/auth.js';
 import adminEventsRouter from './routes/private/adminEvents.js';
