@@ -8,13 +8,11 @@ import session from "express-session";
 import {fileURLToPath} from 'url';
 import {dirname, join} from 'path';
 import specs from './swaggerOptions.js';
-import swaggerUI from 'swagger-ui-express';
 
 import authRouter from './routes/auth/auth.js';
 import adminEventsRouter from './routes/private/adminEvents.js';
 import publicEventsRouter from './routes/public/publicEvents.js';
 import AdminFrontendRouter from "./routes/private/adminFrontend.js";
-import swaggerUi from "swagger-ui-express";
 
 const app = express();
 
@@ -121,10 +119,10 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
     // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    /*res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};*/
 
     // render the error page
     res.status(err.status || 500);

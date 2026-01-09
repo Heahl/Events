@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Events</title>
-    <link rel="stylesheet" href="stylesheets/global.css">
-    <link rel="stylesheet" href="stylesheets/toast.css">
-    <link rel="stylesheet" href="stylesheets/events.css">
+    <link rel="stylesheet" href="/stylesheets/global.css">
+    <link rel="stylesheet" href="/stylesheets/toast.css">
+    <link rel="stylesheet" href="/stylesheets/events.css">
 </head>
 <body>
 <div class="nav-bar">
@@ -33,8 +33,8 @@
                         <div class="event-image">
                             <div class="event-date">
                                 <%= new Date(event.startDate).toLocaleDateString('de-DE', {
-                                    day: 'numeric',
-                                    month: 'short'
+                                    day: "numeric",
+                                    month: "short"
                                 }).toUpperCase() %>
                                 <div style="font-size: 0.8em; margin-top: 5px;">
                                     <%= new Date(event.startDate).getFullYear() %>
@@ -52,19 +52,19 @@
                             <div class="event-meta">
                                 <div class="event-time">
                                     <%= new Date(event.startDate).toLocaleTimeString('de-DE', {
-                                        hour: '2-digit',
-                                        minute: '2-digit'
+                                        hour: "2-digit",
+                                        minute: "2-digit"
                                     }) %> -
                                     <%= new Date(event.endDate).toLocaleTimeString('de-DE', {
-                                        hour: '2-digit',
-                                        minute: '2-digit'
+                                        hour: "2-digit",
+                                        minute: "2-digit"
                                     }) %>
                                 </div>
                                 <div class="event-registration-count">
                                     <%= event.participants ? event.participants.length : 0 %> angemeldet
                                 </div>
                             </div>
-                            <a href="/event/<%= event._id %>/register" class="event-register-btn">Jetzt anmelden</a>
+                            <a href="/event/<%= event._id %>" class="event-register-btn">Jetzt anmelden</a>
                         </div>
                     </div>
                 <% }); %>
@@ -113,9 +113,9 @@
                     <div class="mini-event-card" onclick="window.location='/event/<%= event._id %>'">
                         <div class="mini-event-date">
                             <%= new Date(event.startDate).toLocaleDateString('de-DE', {
-                                weekday: 'short',
-                                day: 'numeric',
-                                month: 'short'
+                                weekday: "short",
+                                day: "numeric",
+                                month: "short"
                             }) %>
                         </div>
                         <h4 class="mini-event-title"><%= event.title %></h4>
