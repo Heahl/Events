@@ -28,7 +28,7 @@ app.set('view engine', 'ejs');
 // Rate Limiter
 const generalLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 Minuten
-    max: 200, // Max 200 Anfragen pro IP
+    max: 1000, // Max 1000 Anfragen pro IP
     message: {error: 'Zu viele Anfragen, bitte versuchen Sie es später erneut.'},
     standardHeaders: true,
     legacyHeaders: false,
@@ -36,7 +36,7 @@ const generalLimiter = rateLimit({
 
 const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 Minuten
-    max: 5, // Max 5 Anmeldeversuche pro IP
+    max: 500, // Max 5 Anmeldeversuche pro IP
     message: {error: 'Zu viele Anmeldeversuche, bitte versuchen Sie es in 15 Minuten erneut.'},
     standardHeaders: true,
     legacyHeaders: false,
