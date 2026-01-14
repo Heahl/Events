@@ -118,7 +118,7 @@ import Event from '../../models/Event.js';
  *           example: "2024-01-10T23:59:59Z"
  */
 
-/* ---------- POST /admin/events && POST /api/events  ---------- */
+/* ---------- POST /admin/event && POST /api/events  ---------- */
 export const createEvent = async (req, res) => {
     try {
 

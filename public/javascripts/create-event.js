@@ -39,12 +39,11 @@ function createEvent() {
         const sanitizedData = sanitizeEventData(data);
 
         try {
-            const response = await fetch('/event', {
+            const response = await fetch('/admin/event', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 body: JSON.stringify(sanitizedData)
             });
