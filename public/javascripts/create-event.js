@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function () {
     createEvent();
 });
@@ -40,7 +39,7 @@ function createEvent() {
         const sanitizedData = sanitizeEventData(data);
 
         try {
-            const response = await fetch('/admin/event', {
+            const response = await fetch('/event', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
