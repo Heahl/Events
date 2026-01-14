@@ -25,8 +25,10 @@
     <div class="admin-section">
         <h2 class="admin-section-title"><%= isEditing ? 'Event-Daten aktualisieren' : 'Neues Event anlegen' %></h2>
 
-        <form id="eventForm" data-event-id="<%= isEditing ? event.id : null %>"
+        <form id="eventForm"
+              data-event-id="<%= isEditing ? event._id : '' %>"
               data-is-editing="<%= isEditing ? 'true' : 'false' %>">
+
             <div class="form-group">
                 <label for="title" class="form-label">Titel *</label>
                 <input type="text" id="title" name="title" class="form-input"
