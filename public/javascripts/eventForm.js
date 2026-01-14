@@ -5,7 +5,7 @@ function eventForm() {
 
     if (!form) return;
 
-    const isEditing = form.hasAttribute('data-event-id');
+    const isEditing = form.getAttribute('data-event-id');
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
