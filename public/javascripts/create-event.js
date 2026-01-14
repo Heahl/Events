@@ -1,46 +1,45 @@
 document.addEventListener('DOMContentLoaded', function () {
-    createEvent();
+    initEventForm();
 });
 
-function createEvent() {
-
+function initEventForm() {
     const form = document.getElementById('eventForm');
     if (!form) {
         console.error('Event form not found in DOM');
         return;
     }
 
-
     // Verhindere doppelte Event-Handler
     if (form.dataset.initialized) {
         console.warn('Event handler already initialized, skipping');
         return;
     }
-
     form.dataset.initialized = 'true';
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
+        // Mode & ID auslesen
+        const isEditing = form.dataset.isEditing === 'true';
+        const eventId = form.dataset.eventId; // "" für Create
+        const url = isEditing ? `/admin/event/${eventId}` : '/admin/event';
+        const method = isEditing ? 'PUT' : 'POST';
+
         // Validierung
         const validation = validateEventForm();
-
         if (!validation.isValid) {
-            // Validierungsfehler zeigen
             showValidationErrors(validation.errors);
             return;
         }
 
-
-        // Nutzereingaben müssen sanitisiert werden
+        // Nutzereingaben sanitieren
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
-
         const sanitizedData = sanitizeEventData(data);
 
         try {
-            const response = await fetch('/admin/event', {
-                method: 'POST',
+            const response = await fetch(url, {
+                method,
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -48,15 +47,14 @@ function createEvent() {
                 body: JSON.stringify(sanitizedData)
             });
 
-
             const result = await response.json();
 
             if (response.ok) {
-                // Erfolg → weiterleiten zum dashboard
+                // Erfolg → weiterleiten zum Dashboard
                 window.location.href = '/admin/dashboard';
             } else {
-                // else → serverseitige Fehler anzeigen
-                showToast(result.error || 'Fehler beim Erstellen des Events');
+                // serverseitige Fehler anzeigen
+                showToast(result.error || 'Fehler beim Speichern des Events');
             }
         } catch (e) {
             console.error('Error in fetch operation:', e);
@@ -64,8 +62,7 @@ function createEvent() {
         }
     });
 
-
-    // Datum validierung - client side
+    // Datumvalidierung - client-side
     const startDateInput = document.getElementById('startDate');
     const endDateInput = document.getElementById('endDate');
     const registrationDeadlineInput = document.getElementById('registrationDeadline');
@@ -73,23 +70,17 @@ function createEvent() {
     if (startDateInput && endDateInput) {
         startDateInput.addEventListener('change', validateDateRelationships);
         endDateInput.addEventListener('change', validateDateRelationships);
-    } else {
-        console.warn('startDate or endDate input not found');
     }
-
     if (registrationDeadlineInput) {
         registrationDeadlineInput.addEventListener('change', validateDateRelationships);
-    } else {
-        console.warn('registrationDeadline input not found');
     }
-
 }
 
+// ---- Form Validation ----
 function validateEventForm() {
     const errors = {};
     let isValid = true;
 
-    // Titel
     const title = document.getElementById('title').value.trim();
     if (!title) {
         errors.title = 'Titel ist ein Pflichtfeld';
@@ -99,60 +90,47 @@ function validateEventForm() {
         isValid = false;
     }
 
-    // Startdatum
     const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+    const registrationDeadline = document.getElementById('registrationDeadline').value;
+
+    // Startdatum
     if (!startDate) {
         errors.startDate = 'Startzeit ist ein Pflichtfeld';
         isValid = false;
-    } else {
-        const startDateTime = new Date(startDate);
-        if (isNaN(startDateTime.getTime())) {
-            errors.startDate = 'Ungültiges Startdatum';
-            isValid = false;
-        }
+    } else if (isNaN(new Date(startDate).getTime())) {
+        errors.startDate = 'Ungültiges Startdatum';
+        isValid = false;
     }
 
     // Enddatum
-    const endDate = document.getElementById('endDate').value;
     if (!endDate) {
         errors.endDate = 'Endzeit ist ein Pflichtfeld';
         isValid = false;
-    } else {
-        const endDateTime = new Date(endDate);
-        if (isNaN(endDateTime.getTime())) {
-            errors.endDate = 'Ungültiges Enddatum';
-            isValid = false;
-        }
+    } else if (isNaN(new Date(endDate).getTime())) {
+        errors.endDate = 'Ungültiges Enddatum';
+        isValid = false;
     }
 
     // Anmeldefrist
-    const registrationDeadline = document.getElementById('registrationDeadline').value;
     if (!registrationDeadline) {
         errors.registrationDeadline = 'Anmeldefrist ist ein Pflichtfeld';
         isValid = false;
-    } else {
-        const deadlineDateTime = new Date(registrationDeadline);
-        if (isNaN(deadlineDateTime.getTime())) {
-            errors.registrationDeadline = 'Ungültiges Anmeldedatum';
-            isValid = false;
-        }
+    } else if (isNaN(new Date(registrationDeadline).getTime())) {
+        errors.registrationDeadline = 'Ungültiges Anmeldedatum';
+        isValid = false;
     }
 
-    // Validierung von Datumsbeziehungen
+    // Datumsbeziehungen
     if (startDate && endDate) {
-        const startDateTime = new Date(startDate);
-        const endDateTime = new Date(endDate);
-        if (startDateTime >= endDateTime) {
+        if (new Date(startDate) >= new Date(endDate)) {
             errors.startDate = 'Startzeit muss vor der Endzeit liegen';
             errors.endDate = 'Endzeit muss nach der Startzeit liegen';
             isValid = false;
         }
     }
-
     if (startDate && registrationDeadline) {
-        const startDateTime = new Date(startDate);
-        const deadlineDateTime = new Date(registrationDeadline);
-        if (deadlineDateTime > startDateTime) {
+        if (new Date(registrationDeadline) > new Date(startDate)) {
             errors.registrationDeadline = 'Die Anmeldefrist muss spätestens am Beginn des Termins liegen';
             isValid = false;
         }
@@ -167,9 +145,7 @@ function validateDateRelationships() {
     const registrationDeadline = document.getElementById('registrationDeadline').value;
 
     if (startDate && endDate) {
-        const startDateTime = new Date(startDate);
-        const endDateTime = new Date(endDate);
-        if (startDateTime >= endDateTime) {
+        if (new Date(startDate) >= new Date(endDate)) {
             document.getElementById('startDate').setCustomValidity('Startzeit muss vor Endzeit liegen');
             document.getElementById('endDate').setCustomValidity('Endzeit muss nach Startzeit liegen');
         } else {
@@ -179,9 +155,7 @@ function validateDateRelationships() {
     }
 
     if (startDate && registrationDeadline) {
-        const startDateTime = new Date(startDate);
-        const deadlineDateTime = new Date(registrationDeadline);
-        if (deadlineDateTime > startDateTime) {
+        if (new Date(registrationDeadline) > new Date(startDate)) {
             document.getElementById('registrationDeadline').setCustomValidity('Die Anmeldefrist muss spätestens am Beginn des Termins liegen');
         } else {
             document.getElementById('registrationDeadline').setCustomValidity('');
@@ -189,8 +163,9 @@ function validateDateRelationships() {
     }
 }
 
+// ---- Sanitization ----
 function sanitizeEventData(data) {
-    const sanitized = {
+    return {
         title: sanitizeString(data.title),
         description: sanitizeString(data.description) || '',
         location: sanitizeString(data.location) || '',
@@ -198,44 +173,30 @@ function sanitizeEventData(data) {
         endDate: data.endDate,
         registrationDeadline: data.registrationDeadline
     };
-    return sanitized;
 }
 
 function sanitizeString(str) {
-    if (typeof str !== 'string') {
-        return '';
-    }
-
+    if (typeof str !== 'string') return '';
     try {
         let sanitized = str.trim();
-
-        // Entferne script-Tags (sicherere Methode)
         sanitized = sanitized.replace(/<\s*script[^>]*>[\s\S]*?<\/\s*script\s*>/gi, '');
-
-        // Entferne javascript: URLs
         sanitized = sanitized.replace(/javascript:/gi, '');
-
-        // Entferne event handler (on\w+=)
         sanitized = sanitized.replace(/on\w+\s*=\s*["'][^"']*["']/gi, '');
-
         return sanitized;
-    } catch (error) {
-        console.error('Sanitization error:', error, 'Input:', str);
-        return str.trim(); // Rückfall auf einfache Bereinigung
+    } catch (err) {
+        console.error('Sanitization error:', err, 'Input:', str);
+        return str.trim();
     }
 }
 
+// ---- Show Errors ----
 function showValidationErrors(errors) {
-    // erst vorherige Fehlermeldungen leeren
-    document.querySelectorAll('.error-message').forEach(err => err.textContent = '');
-
-    // Fehler zeigen
+    document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
     Object.keys(errors).forEach(fieldName => {
         const errorElement = document.getElementById(fieldName + 'Error');
         if (errorElement) {
             errorElement.textContent = errors[fieldName];
         } else {
-            // fall kein div, als toast zeigen
             showToast(errors[fieldName]);
         }
     });
