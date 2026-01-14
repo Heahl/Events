@@ -39,8 +39,8 @@ async function registerForm() {
 
                 // redirect nach 3 sek
                 setTimeout(() => {
-                    window.location.href = '/login';
-                }, 3000);
+                    window.location.href = '/';
+                }, 1000);
             }
         } catch (e) {
             console.error('Registration Error:', e);
